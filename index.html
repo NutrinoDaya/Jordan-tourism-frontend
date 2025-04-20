@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated Gradient Bars</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1c1c1c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .bar-container {
+      width: 30px;
+      height: 150px;
+      background-color: #121212;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      border-radius: 20px;
+      animation-fill-mode: forwards;
+    }
+
+    .bar1 {
+      background: linear-gradient(to top, #00e5ff, #00c8ff);
+      height: 0%;
+      animation: fill1 2s infinite ease-in-out;
+    }
+
+    .bar2 {
+      background: linear-gradient(to top, #00e676, #00c853);
+      height: 0%;
+      animation: fill2 3s infinite ease-in-out;
+    }
+
+    .bar3 {
+      background: linear-gradient(to top, #ffeb3b, #fdd835);
+      height: 0%;
+      animation: fill3 4s infinite ease-in-out;
+    }
+
+    .bar4 {
+      background: linear-gradient(to top, #9e9e9e, #bdbdbd);
+      height: 0%;
+      animation: fill4 5s infinite ease-in-out;
+    }
+
+    .bar5 {
+      background: linear-gradient(to top, #40c4ff, #00b0ff);
+      height: 0%;
+      animation: fill5 6s infinite ease-in-out;
+    }
+
+    @keyframes fill1 {
+      0%, 100% { height: 0%; }
+      50% { height: 100%; }
+    }
+
+    @keyframes fill2 {
+      0%, 100% { height: 0%; }
+      50% { height: 80%; }
+    }
+
+    @keyframes fill3 {
+      0%, 100% { height: 0%; }
+      50% { height: 60%; }
+    }
+
+    @keyframes fill4 {
+      0%, 100% { height: 0%; }
+      50% { height: 40%; }
+    }
+
+    @keyframes fill5 {
+      0%, 100% { height: 0%; }
+      50% { height: 70%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="bar-container"><div class="bar bar1"></div></div>
+    <div class="bar-container"><div class="bar bar2"></div></div>
+    <div class="bar-container"><div class="bar bar3"></div></div>
+    <div class="bar-container"><div class="bar bar4"></div></div>
+    <div class="bar-container"><div class="bar bar5"></div></div>
+  </div>
+</body>
+</html>

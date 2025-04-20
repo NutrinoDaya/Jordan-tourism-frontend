@@ -1,0 +1,105 @@
+/* ===========================================================
+   Admin Dashboard - Modern & Consistent Styling
+=========================================================== */
+:root {
+  --admin-bg: #f7f7f7;
+  --admin-border: #ddd;
+  --admin-transition: 0.3s ease;
+  --admin-card-bg: #ffffff;
+  --admin-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --admin-section-bg: #ffffff;
+  --admin-section-border: #eee;
+  --admin-section-radius: 8px;
+  --primary-color: #1A73E8;
+  --text-color: #555;
+}
+
+/* Card styling for admin items */
+.admin__card {
+  background-color: var(--admin-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-section-radius);
+  transition: var(--admin-transition);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin__card:hover {
+  background-color: var(--admin-card-bg);
+  box-shadow: var(--admin-hover-shadow);
+}
+
+/* Section containers */
+.admin__section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--admin-section-bg);
+  border: 1px solid var(--admin-section-border);
+  border-radius: var(--admin-section-radius);
+}
+
+.admin__section h4 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Overall Dashboard Background */
+.admin__dashboard {
+  background: #fcfcfc;
+  padding: 2rem 0;
+}
+
+/* Admin Tabs Styling */
+.admin__tabs .nav-link {
+  margin-right: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  color: var(--text-color);
+  font-weight: 500;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin__tabs .nav-link.active {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: var(--admin-section-radius);
+}
+
+/* Button group spacing in admin sections */
+.admin__btn-group > .btn {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Additional spacing for card items and booking details */
+.admin__card > .row {
+  margin-bottom: 1rem;
+}
+.booking__details p {
+  margin: 0.5rem 0;
+}
+
+/* Ensure consistent spacing for inline form elements */
+.admin__card label,
+.admin__card input,
+.admin__card button {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .admin__tabs .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  .admin__card {
+    padding: 0.75rem;
+  }
+  .booking__details p {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,54 @@
+.add-blog-modal .modal-content {
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  .add-blog-modal .modal-header {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+  }
+  
+  .add-blog-modal .modal-body {
+    padding: 20px 15px;
+  }
+  
+  .add-blog-modal .modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 15px 20px;
+  }
+  
+  .add-blog-modal label {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .add-blog-modal input[type="text"],
+  .add-blog-modal textarea,
+  .add-blog-modal input[type="file"] {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+  }
+  
+  .add-blog-modal .preview-image {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .add-blog-modal .preview-image img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .error-text {
+    color: #d9534f;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
