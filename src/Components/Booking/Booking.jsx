@@ -17,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../utils/config";
+import { FaUser, FaCreditCard, FaCalendarAlt, FaLock } from 'react-icons/fa';
 
 const Booking = ({ tour, avgRating, totalRating, reviews }) => {
   const { price, title } = tour;
@@ -143,20 +144,32 @@ const Booking = ({ tour, avgRating, totalRating, reviews }) => {
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="cardName">Cardholder Name</Label>
+              <Label for="cardName">
+                <FaUser style={{ marginRight: '8px' }} />
+                Cardholder Name
+              </Label>
               <Input id="cardName" placeholder="John Doe" />
             </FormGroup>
             <FormGroup>
-              <Label for="cardNumber">Card Number</Label>
+              <Label for="cardNumber">
+                <FaCreditCard style={{ marginRight: '8px' }} />
+                Card Number
+              </Label>
               <Input id="cardNumber" placeholder="1234 5678 9012 3456" />
             </FormGroup>
             <FormGroup className="d-flex gap-2">
               <div style={{ flex: 1 }}>
-                <Label for="expiry">Expiry</Label>
+                <Label for="expiry">
+                  <FaCalendarAlt style={{ marginRight: '8px' }} />
+                  Expiry
+                </Label>
                 <Input id="expiry" placeholder="MM/YY" />
               </div>
               <div style={{ flex: 1 }}>
-                <Label for="cvc">CVC</Label>
+                <Label for="cvc">
+                  <FaLock style={{ marginRight: '8px' }} />
+                  CVC
+                </Label>
                 <Input id="cvc" placeholder="123" />
               </div>
             </FormGroup>
