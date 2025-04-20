@@ -75,6 +75,18 @@
   font-weight: 700 !important;
   font-size: 1.1rem !important;
 }
+.modal-content {
+  border-radius: 12px;
+}
+
+.modal-header, .modal-body, .modal-footer {
+  padding: 1.5rem;
+}
+
+.modal-body input {
+  border-radius: 6px;
+  padding: 10px;
+}
 
 /* Responsive styles */
 @media only screen and (max-width: 376px) {
