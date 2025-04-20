@@ -61,6 +61,14 @@
   transform: scale(1.05);
 }
 
+.about__description {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+
 @media only screen and (max-width: 768px) {
   .aboutContent {
     flex-direction: column-reverse;

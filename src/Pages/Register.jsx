@@ -47,7 +47,7 @@ const Register = () => {
       });
 
       const result = await res.json();
-      
+      console.log("result : ", result)
       if (!res.ok) {
         setError(result.message);
         dispatch({ type: "REGISTER_FAILURE", payload: result.message });
