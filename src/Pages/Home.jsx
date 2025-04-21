@@ -37,7 +37,7 @@ const translations = {
     blogSubtitle: "From Our Blog",
     testimonialsSubtitle: "Testimonials",
     testimonialsTitle: "Hear What Our Travelers Say About Jordan",
-    coachBot: "Coach Bot",
+    coachBot: "Chat Bot",
     chatPlaceholder: "Ask anything...",
     offlineMsg: "Sorry, I'm offline.",
     errorMsg: "Sorry, I can't respond right now.",
@@ -60,7 +60,7 @@ const translations = {
     blogSubtitle: "من مدونتنا",
     testimonialsSubtitle: "آراء المسافرين",
     testimonialsTitle: "استمع إلى ما يقوله مسافرونا عن الأردن",
-    coachBot: "بوت المدرب",
+    coachBot: "تشات",
     chatPlaceholder: "اسأل أي شيء...",
     offlineMsg: "عذرًا، أنا غير متصل.",
     errorMsg: "عذرًا، لا أستطيع الرد الآن.",
@@ -74,7 +74,14 @@ function Chatbot({ t }) {
   const [msgs, setMsgs] = useState([]);
   const [input, setInput] = useState("");
 
-  const toggle = () => setOpen(o => !o);
+  // Open the chat window
+  const openChat = () => setOpen(true);
+
+  // Close the chat window and clear messages
+  const closeChat = () => {
+    setOpen(false);
+    setMsgs([]);
+  };
 
   const send = async e => {
     e.preventDefault();
@@ -89,7 +96,6 @@ function Chatbot({ t }) {
         body: JSON.stringify({ prompt: userMsg }),
       });
       const data = await res.json();
-      console.log("data : ", data)
       setMsgs(m => [...m, { from: 'bot', text: data.response || t.errorMsg }]);
     } catch {
       setMsgs(m => [...m, { from: 'bot', text: t.offlineMsg }]);
@@ -107,7 +113,7 @@ function Chatbot({ t }) {
         >
           <div className="chat-header">
             <span>{t.coachBot}</span>
-            <button onClick={toggle}><FaTimes /></button>
+            <button onClick={closeChat}><FaTimes /></button>
           </div>
           <div className="chat-body">
             {msgs.map((m, i) => (
@@ -124,7 +130,7 @@ function Chatbot({ t }) {
           </form>
         </motion.div>
       )}
-      <button className="chat-toggle" onClick={toggle}>
+      <button className="chat-toggle" onClick={openChat}>
         <FaComments />
       </button>
     </>
