@@ -4,15 +4,20 @@
   padding: 60px 20px 30px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  /* sticky behavior */
   width: 100%;
   margin-top: auto;
+  flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+html, body, #root {
+  height: 100%;
 }
 
 .footer__container {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 
 .footer__grid {
   display: flex;

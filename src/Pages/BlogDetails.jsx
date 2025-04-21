@@ -11,6 +11,13 @@ import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../context/AuthContext";
 
 const BlogDetails = () => {
+  const [locale, setLocale] = useState("en");
+  const translations = {
+    en: { toggleLabel: "عربي" },
+    ar: { toggleLabel: "English" },
+  };
+  const t = translations[locale];
+
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const commentMsgRef = useRef("");
@@ -21,22 +28,17 @@ const BlogDetails = () => {
   const [commentStatus, setCommentStatus] = useState(null);
   const [isLoginAlertVisible, setIsLoginAlertVisible] = useState(false);
 
-  // Get current user from localStorage to check for admin role
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const isAdmin = currentUser?.role === "admin";
 
-  // Fetch blog details
   useEffect(() => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/blogs/${id}`);
-        console.log("Blog data: ", response.data);
         setBlog(response.data);
-        // Use blog comments from the blog data if available
         setComments(response.data.comments || []);
         setLoading(false);
       } catch (err) {
-        console.log("Error: ", err);
         setError("Error loading blog details.");
         setLoading(false);
       }
@@ -44,11 +46,9 @@ const BlogDetails = () => {
     fetchBlog();
   }, [id]);
 
-  // Fetch comments with custom hook (if the API returns additional comments)
   const { data: fetchedComments, loading: loadingComments, error: errorComments } = useFetch(`comment/blog/${id}/`);
 
   useEffect(() => {
-    // If there are fetched comments, merge them with the blog's comments.
     if (fetchedComments) {
       setComments(fetchedComments);
     }
@@ -74,8 +74,6 @@ const BlogDetails = () => {
 
     try {
       const response = await axios.post(`${BASE_URL}/comment/${id}`, commentData);
-      console.log("response.data : ", response.data);
-      // Append the new comment without reloading the page
       setComments((prevComments) => [...prevComments, response.data]);
       commentMsgRef.current.value = "";
       setCommentStatus("success");
@@ -84,14 +82,10 @@ const BlogDetails = () => {
     }
   };
 
-  // Delete comment handler for admins
   const handleDeleteComment = async (commentId) => {
     try {
       await axios.get(`${BASE_URL}/comment/${commentId}`);
-      // Remove the deleted comment from state
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment._id !== commentId)
-      );
+      setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
     } catch (err) {
       console.log("Error deleting comment: ", err);
     }
@@ -107,18 +101,21 @@ const BlogDetails = () => {
   }
 
   if (error || !blog || errorComments) {
-    console.log("Error : ", error);
-    console.log("errorComments : ", errorComments);
-    console.log("blog : ", blog);
-
     return <div className="error__msg">Error loading blog details. Check your network</div>;
   }
 
-  // Destructure blog properties
   const { title, author, createdAt, photo, content } = blog;
 
   return (
     <>
+      <button
+        onClick={() => setLocale((l) => (l === 'en' ? 'ar' : 'en'))}
+        className="lang-toggle btn secondary"
+        style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 1000 }}
+      >
+        {t.toggleLabel}
+      </button>
+
       <section className="blog-details-section">
         <Container>
           <Row>
@@ -138,8 +135,7 @@ const BlogDetails = () => {
                     <div className="blog__comments d-flex align-items-center gap-1">
                       <i className="ri-chat-3-line"></i>
                       <span>
-                        {comments?.length || 0}{" "}
-                        {comments?.length === 1 ? "Comment" : "Comments"}
+                        {comments?.length || 0} {comments?.length === 1 ? "Comment" : "Comments"}
                       </span>
                     </div>
                   </div>
@@ -193,9 +189,7 @@ const BlogDetails = () => {
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
                               <h5>{comment.username}</h5>
-                              <p>
-                                {new Date(comment.createdAt).toLocaleDateString("en-in", options)}
-                              </p>
+                              <p>{new Date(comment.createdAt).toLocaleDateString("en-in", options)}</p>
                             </div>
                             {isAdmin && (
                               <i

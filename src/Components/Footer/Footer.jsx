@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
-
 import "./Footer.css";
 
 const quickLinks1 = [
@@ -23,58 +21,33 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__grid">
-          {/* Logo + Social */}
           <div className="logo">
-
             <div className="social__links">
-              <span>
-                <Link to="https://youtube.com">
-                  <i className="ri-youtube-fill"></i>
-                </Link>
-              </span>
-              <span>
-                <Link to="https://facebook.com">
-                  <i className="ri-facebook-circle-line"></i>
-                </Link>
-              </span>
-              <span>
-                <Link to="https://instagram.com">
-                  <i className="ri-instagram-line"></i>
-                </Link>
-              </span>
-              <span>
-                <Link to="https://twitter.com">
-                  <i className="ri-twitter-line"></i>
-                </Link>
-              </span>
+              <span><Link to="https://youtube.com"><i className="ri-youtube-fill"></i></Link></span>
+              <span><Link to="https://facebook.com"><i className="ri-facebook-circle-line"></i></Link></span>
+              <span><Link to="https://instagram.com"><i className="ri-instagram-line"></i></Link></span>
+              <span><Link to="https://twitter.com"><i className="ri-twitter-line"></i></Link></span>
             </div>
           </div>
 
-          {/* Discover */}
           <div>
             <h5 className="footer__link-title">Discover</h5>
             <ul className="footer__quick-links">
               {quickLinks1.map((item, idx) => (
-                <li key={idx}>
-                  <Link to={item.path}>{item.display}</Link>
-                </li>
+                <li key={idx}><Link to={item.path}>{item.display}</Link></li>
               ))}
             </ul>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h5 className="footer__link-title">Quick Links</h5>
             <ul className="footer__quick-links">
               {quickLinks2.map((item, idx) => (
-                <li key={idx}>
-                  <Link to={item.path}>{item.display}</Link>
-                </li>
+                <li key={idx}><Link to={item.path}>{item.display}</Link></li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h5 className="footer__link-title">Contact</h5>
             <ul className="footer__quick-links">
@@ -82,20 +55,14 @@ const Footer = () => {
                 <i className="ri-mail-line"></i>
                 <div>
                   <h6>Email:</h6>
-                  <p>
-                    <a href="mailto:support@travelworld.com" className="color-text">
-                    </a>
-                  </p>
+                  <p><a href="mailto:support@travelworld.com" className="color-text">support@travelworld.com</a></p>
                 </div>
               </li>
               <li className="d-flex">
                 <i className="ri-phone-fill"></i>
                 <div>
                   <h6>Phone:</h6>
-                  <p>
-                    <a href="tel:+9876543210" className="color-text">
-                    </a>
-                  </p>
+                  <p><a href="tel:+9876543210" className="color-text">+9876543210</a></p>
                 </div>
               </li>
               <li className="d-flex">
@@ -109,7 +76,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
         <div className="footer__bottom">
           &copy; {year} . All rights reserved.
         </div>
