@@ -1,0 +1,131 @@
+/* Base header container */
+.header {
+  width: 100%;
+  height: 80px;              /* fixed height to avoid layout shifts */
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 0 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+/* Sticky header state */
+.sticky__header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation wrapper */
+.nav__wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo styles */
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  width: 40px;   /* adjust as needed */
+  height: auto;
+  margin-right: 0.5rem;
+}
+.logo-title {
+  font-size: 1.5rem;
+  color: var(--heading-color);
+  font-weight: 700;
+}
+
+/* Navigation menu (for larger screens) */
+.navigation {
+  flex: 1;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+.nav__item a {
+  text-decoration: none;
+  color: var(--heading-color);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+.nav__item a:hover,
+.nav__item a.active__link {
+  color: var(--secondary-color);
+}
+
+/* Right-side container for user info and toggle */
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav__btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav__btns button {
+  font-size: 0.9rem;
+}
+
+/* Mobile menu toggle (hidden on desktop) */
+.mobile__menu {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 768px) {
+  /* Slide-in mobile navigation panel */
+  .navigation {
+    position: fixed;
+    top: 80px; /* position below the header */
+    right: 0;
+    background: #fff;
+    width: 70%;
+    height: calc(100% - 80px);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+  .navigation.show__menu {
+    transform: translateX(0);
+  }
+  .menu {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  .mobile__menu {
+    display: block;
+  }
+}
+
+/* Button link adjustments for consistency */
+.nav__btns .btn a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Secondary and primary button styles */
+.secondary__btn {
+  background-color: #6c757d;
+  border: none;
+}
+.primary__btn {
+  background-color: var(--primary-color);
+  border: none;
+}

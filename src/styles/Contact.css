@@ -1,0 +1,112 @@
+.container {
+  margin-top: 3rem;
+  padding: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form__group {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__group label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 0.5rem;
+}
+
+.form__group input,
+.form__group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.6rem;
+  background-color: #f9f9f9;
+  color: var(--heading-color);
+  font-size: 1rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.form__group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+#message {
+  height: 120px;
+}
+
+.form__group input:focus,
+.form__group textarea:focus {
+  border-color: var(--primary-color);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.1);
+}
+
+.form__group textarea::placeholder,
+.form__group input::placeholder {
+  color: #9ca3af;
+}
+
+.form__group button {
+  align-self: flex-start;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form__group button:hover {
+  background-color: var(--primary-color-hover);
+  transform: translateY(-1px);
+}
+
+/* Contact Info Card */
+.contact-info {
+  padding: 1.5rem;
+  margin-top: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+}
+
+.contact-info p {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.75rem 0;
+  color: var(--text-color);
+}
+
+.contact-info p:first-child {
+  margin-top: 0;
+}
+
+.contact-info p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 576px) {
+  .form__group input::placeholder,
+  .form__group textarea::placeholder {
+    font-size: 0.85rem;
+  }
+
+  .form__group button {
+    width: 100%;
+    text-align: center;
+  }
+}

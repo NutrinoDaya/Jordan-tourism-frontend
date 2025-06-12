@@ -1,0 +1,425 @@
+/* ===========================================================
+   Modern & Consistent Styles for the Home Page
+   -----------------------------------------------------------
+   Adjust the color variables in your global :root or body as needed.
+   =========================================================== */
+   :root {
+    --primary-color: #1A73E8;
+    --secondary-color: #FF6B6B;
+    --heading-color: #333333;
+    --text-color: #555555;
+    --background-color: #f9f9f9;
+    --subtitle-font: 'Poppins', sans-serif;
+    --main-font: 'Roboto', sans-serif;
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15);
+    --border-radius: 16px;
+  }
+  
+  /* --------------------------
+     Tourism Banner Section
+  ----------------------------- */
+  .tourism-banner {
+    position: relative;
+    text-align: center;
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+  
+  .tourism-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    filter: brightness(0.75);
+  }
+  
+  .tourism-banner .banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius);
+  }
+  
+  .tourism-banner .banner-text h2 {
+    margin: 0 0 0.5rem;
+    font-size: 2.5rem;
+    font-family: var(--main-font);
+  }
+  
+  .tourism-banner .banner-text p {
+    margin: 0;
+    font-size: 1.25rem;
+    font-family: var(--subtitle-font);
+  }
+  
+  /* --------------------------
+     Hero Section
+  ----------------------------- */
+  .hero-section {
+    padding: 4rem 0;
+    background: var(--background-color);
+  }
+  
+  .hero__content {
+    margin: 0 auto;
+    max-width: 800px;
+    font-family: var(--main-font);
+    text-align: left;
+  }
+  
+  .hero__subtitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .hero__subtitle img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  
+  .hero__content h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .hero__content h1 .highlight {
+    color: var(--secondary-color);
+  }
+  
+  .hero__content p {
+    font-size: 1.125rem;
+    color: var(--text-color);
+    line-height: 1.8;
+  }
+  
+  /* Hero Image / Video Boxes */
+  .hero__img-box {
+    margin: 1rem auto;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+  
+  .hero__img-box img,
+  .hero__img-box video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border: 2px solid var(--secondary-color);
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hero__img-box img:hover,
+  .hero__img-box video:hover {
+    transform: scale(1.03);
+    box-shadow: var(--box-shadow-hover);
+  }
+  
+  /* --------------------------
+     Services Section
+  ----------------------------- */
+  .services-section {
+    padding: 4rem 0;
+    background: #fff;
+    text-align: center;
+  }
+  
+  .services__subtitle {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-family: var(--subtitle-font);
+    margin-bottom: 0.5rem;
+  }
+  
+  .services__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--main-font);
+    margin-bottom: 2rem;
+  }
+  
+  /* --------------------------
+     Featured Tours Section
+  ----------------------------- */
+  .featured-tours-section {
+    padding: 4rem 0;
+    background: var(--background-color);
+    text-align: center;
+  }
+  
+  .featured__tour-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    font-family: var(--main-font);
+    margin: 2rem 0;
+  }
+  
+  /* --------------------------
+     Experience Section
+  ----------------------------- */
+  .experience-section {
+    padding: 4rem 0;
+    background: #fff;
+  }
+  
+  .experience__content h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    font-family: var(--main-font);
+  }
+  
+  .experience__content p {
+    font-size: 1.125rem;
+    color: var(--text-color);
+    line-height: 1.8;
+  }
+  
+  .counter__wrapper {
+    margin-top: 3rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .counter__box {
+    text-align: center;
+    font-family: var(--main-font);
+  }
+  
+  .counter__box span {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .counter__box span:hover {
+    transform: translateY(-3px);
+  }
+  
+  .counter__box h6 {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-top: 0.75rem;
+  }
+  
+  /* --------------------------
+     Gallery Section
+  ----------------------------- */
+  .gallery-section {
+    padding: 4rem 0;
+    background: var(--background-color);
+    text-align: center;
+  }
+  
+  .gallery__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    font-family: var(--main-font);
+    margin: 2rem 0;
+  }
+  
+  /* --------------------------
+     Featured Blogs Section
+  ----------------------------- */
+  .featured-blogs-section {
+    padding: 4rem 0;
+    background: #fff;
+  }
+  
+  .featured-blogs-section .title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* --------------------------
+     Testimonials Section
+  ----------------------------- */
+  .testimonials-section {
+    padding: 4rem 0;
+    background: var(--background-color);
+    text-align: center;
+  }
+  
+  .testimonials__title,
+  .testmonials__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    font-family: var(--main-font);
+    margin: 2rem 0;
+  }
+  
+  /* --------------------------
+     Contact & Newsletter Sections
+  ----------------------------- */
+  .contact-section,
+  .newsletter-section {
+    padding: 4rem 0;
+    background: #fff;
+  }
+  
+  /* Chatbot */
+.chat-toggle {
+  background: var(--secondary-color);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition);
+}
+.chat-toggle:hover {
+  transform: scale(1.15);
+}
+
+.chat-window {
+  width: 400px;
+  max-height: 600px;
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  font-family: var(--main-font);
+}
+
+.chat-header {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.chat-msg {
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  max-width: 85%;
+}
+
+.chat-msg.user {
+  background: var(--secondary-color);
+  color: #fff;
+  align-self: flex-end;
+}
+
+.chat-msg.bot {
+  background: var(--background-color);
+  color: var(--text-color);
+  align-self: flex-start;
+}
+
+.chat-input {
+  display: flex;
+  border-top: 1px solid #eee;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.chat-input button {
+  border: none;
+  background: var(--secondary-color);
+  color: #fff;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.chat-input button:hover {
+  background: var(--primary-color);
+}
+
+  /* --------------------------
+     Responsive Breakpoints
+  ----------------------------- */
+  @media (max-width: 992px) {
+    .hero__content {
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .hero__img-box {
+      margin: 2rem auto;
+    }
+    .services__title,
+    .featured__tour-title,
+    .gallery__title,
+    .testimonials__title,
+    .experience__content h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .hero__content {
+      padding: 1rem;
+    }
+    .hero__content h1 {
+      font-size: 1.8rem;
+    }
+    .services__title,
+    .featured__tour-title,
+    .gallery__title,
+    .testimonials__title,
+    .experience__content h2 {
+      font-size: 1.6rem;
+    }
+    .counter__box span {
+      width: 60px;
+      height: 60px;
+      font-size: 1.3rem;
+    }
+    .counter__box h6 {
+      font-size: 0.75rem;
+    }
+  }
+  
