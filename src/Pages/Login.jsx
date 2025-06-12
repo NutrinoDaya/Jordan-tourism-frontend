@@ -118,7 +118,7 @@ const Login = () => {
                 {error && <div className="alert alert-danger">{error}</div>}
                 {success && <div className="alert alert-success">{success}</div>}
                 <Form onSubmit={handleClick}>
-                  <FormGroup>
+                  <FormGroup style={{ position: "relative" }}>
                     <input
                       type="email"
                       placeholder={t.email}
@@ -127,8 +127,15 @@ const Login = () => {
                       id="email"
                       onChange={handleChange}
                     />
+                    <span className="info-icon" tabIndex={0}>
+                      ⓘ
+                      <span className="tooltip-text">
+                        Email must be valid and include "@".
+                      </span>
+                    </span>
                   </FormGroup>
-                  <FormGroup>
+
+                  <FormGroup style={{ position: "relative" }}>
                     <div className="password__input">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -143,7 +150,14 @@ const Login = () => {
                         onClick={togglePasswordVisibility}
                       ></i>
                     </div>
+                    <span className="info-icon" tabIndex={0}>
+                      ⓘ
+                      <span className="tooltip-text">
+                        Password must be at least 8 characters with letters & numbers.
+                      </span>
+                    </span>
                   </FormGroup>
+
                   <Button className="btn secondary__btn auth__btn" type="submit">
                     {t.login}
                   </Button>
