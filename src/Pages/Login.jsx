@@ -149,7 +149,7 @@ const Login = () => {
                   </Button>
                 </Form>
               <p>
-                <Link to="/forgotpassword" style={{ color: "red" }}>
+                <Link to="/forgotpassword" style={{ color: "black" }}>
                   {t.forgot}
                 </Link>
               </p>
