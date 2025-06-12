@@ -7,7 +7,6 @@ import userIcon from "../assets/images/user.png";
 import { AuthContext } from "../context/AuthContext";
 import { BASE_URL } from "../utils/config";
 
-// Translations
 const translations = {
   en: {
     login: "Login",
@@ -17,6 +16,7 @@ const translations = {
     error: "An error occurred while logging in. Please try again later.",
     noAccount: "Don't have an account?",
     register: "Register",
+    forgot: "Forgot Password?",
     toggleLabel: "عربي",
   },
   ar: {
@@ -27,9 +27,11 @@ const translations = {
     error: "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.",
     noAccount: "ليس لديك حساب؟",
     register: "سجّل الآن",
+    forgot: "نسيت كلمة المرور؟",
     toggleLabel: "English",
   },
 };
+
 
 const Login = () => {
   const [locale, setLocale] = useState("en");
@@ -146,13 +148,18 @@ const Login = () => {
                     {t.login}
                   </Button>
                 </Form>
+              <p>
+                <Link to="/forgotpassword" style={{ color: "red" }}>
+                  {t.forgot}
+                </Link>
+              </p>
 
-                <p>
-                  <Link to="/forgotpassword">{t.forgot}</Link>
-                </p>
-                <p>
-                  {t.noAccount} <Link to="/register">{t.register}</Link>
-                </p>
+              <p>
+                {t.noAccount}{" "}
+                <Link to="/register" style={{ color: "blue" }}>
+                  {t.register}
+                </Link>
+              </p>
               </div>
             </div>
           </Col>
