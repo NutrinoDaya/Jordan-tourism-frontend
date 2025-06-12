@@ -32,7 +32,6 @@ const translations = {
   },
 };
 
-
 const Login = () => {
   const [locale, setLocale] = useState("en");
   const t = translations[locale];
@@ -118,7 +117,7 @@ const Login = () => {
                 {error && <div className="alert alert-danger">{error}</div>}
                 {success && <div className="alert alert-success">{success}</div>}
                 <Form onSubmit={handleClick}>
-                  <FormGroup style={{ position: "relative" }}>
+                  <FormGroup>
                     <input
                       type="email"
                       placeholder={t.email}
@@ -135,7 +134,7 @@ const Login = () => {
                     </span>
                   </FormGroup>
 
-                  <FormGroup style={{ position: "relative" }}>
+                  <FormGroup>
                     <div className="password__input">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -162,18 +161,17 @@ const Login = () => {
                     {t.login}
                   </Button>
                 </Form>
-              <p>
-                <Link to="/forgotpassword" style={{ color: "black" }}>
-                  {t.forgot}
-                </Link>
-              </p>
-
-              <p>
-                {t.noAccount}{" "}
-                <Link to="/register" style={{ color: "blue" }}>
-                  {t.register}
-                </Link>
-              </p>
+                <p>
+                  <Link to="/forgotpassword" style={{ color: "black" }}>
+                    {t.forgot}
+                  </Link>
+                </p>
+                <p>
+                  {t.noAccount}{" "}
+                  <Link to="/register" style={{ color: "blue" }}>
+                    {t.register}
+                  </Link>
+                </p>
               </div>
             </div>
           </Col>

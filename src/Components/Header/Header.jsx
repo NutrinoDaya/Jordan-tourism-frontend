@@ -6,9 +6,9 @@ import "./header.css";
 
 const nav__links = [
   { path: "/", display: "Home" },
-  { path: "/about", display: "About" },
   { path: "/tours", display: "Jordan Tours" },
-  { path: "/blogs", display: "Blogs" }
+  { path: "/blogs", display: "Blogs" },
+  { path: "/about", display: "About" }
 ];
 
 const Header = () => {

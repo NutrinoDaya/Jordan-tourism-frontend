@@ -125,6 +125,35 @@
   border-color: #333 transparent transparent transparent;
 }
 
+/* New styles to position info icons to the right */
+.login__form .form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login__form .form-group > input {
+  flex: 1;
+}
+
+.login__form .form-group > .password__input {
+  flex: 1;
+  position: relative;
+}
+
+.login__form .password__input input {
+  width: 100%;
+  padding-right: 40px; /* space for the eye icon */
+}
+
+.login__form .password__input i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 768px) {
   .login__img {
     display: none;
