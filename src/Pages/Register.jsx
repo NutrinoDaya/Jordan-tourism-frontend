@@ -22,6 +22,8 @@ const translations = {
     invalidEmail: "Please enter a valid email address",
     invalidPassword: "Password must be at least 8 characters, include uppercase, lowercase, and a number",
     toggleLabel: "عربي",
+    emailTooltip: "Please enter a valid email address, e.g., yourname@example.com.",
+    passwordTooltip: "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a number.",
   },
   ar: {
     register: "إنشاء حساب",
@@ -37,8 +39,11 @@ const translations = {
     invalidEmail: "يرجى إدخال بريد إلكتروني صالح",
     invalidPassword: "يجب أن تكون كلمة المرور 8 أحرف على الأقل وتحتوي على حرف كبير وحرف صغير ورقم",
     toggleLabel: "English",
+    emailTooltip: "يرجى إدخال عنوان بريد إلكتروني صالح ، على سبيل المثال ، yourname@example.com.",
+    passwordTooltip: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وأن تشتمل على حرف كبير وحرف صغير ورقم.",
   },
 };
+
 
 const Register = () => {
   const [locale, setLocale] = useState("en");
@@ -154,7 +159,7 @@ const Register = () => {
                       onChange={handleChange}
                     />
                   </FormGroup>
-                  <FormGroup>
+                  <FormGroup className="form-group">
                     <input
                       type="email"
                       placeholder={t.email}
@@ -163,11 +168,16 @@ const Register = () => {
                       id="email"
                       onChange={handleEmailChange}
                     />
-                    {!isEmailValid && (
-                      <div className="alert alert-danger">{t.invalidEmail}</div>
-                    )}
+                    <div className="info-icon" tabIndex="0">
+                      <i className="ri-information-line">i</i>
+                      <p className="tooltip-text">{t.emailTooltip}</p>
+                    </div>
                   </FormGroup>
-                  <FormGroup>
+                  {!isEmailValid && (
+                    <div className="alert alert-danger">{t.invalidEmail}</div>
+                  )}
+
+                  <FormGroup className="form-group">
                     <div className="password__input">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -182,10 +192,15 @@ const Register = () => {
                         onClick={togglePasswordVisibility}
                       ></i>
                     </div>
-                    {!isPasswordValid && (
-                      <div className="alert alert-danger">{t.invalidPassword}</div>
-                    )}
+                    <div className="info-icon" tabIndex="0">
+                      <i className="ri-information-line">i</i>
+                      <p className="tooltip-text">{t.passwordTooltip}</p>
+                    </div>
                   </FormGroup>
+                  {!isPasswordValid && (
+                    <div className="alert alert-danger">{t.invalidPassword}</div>
+                  )}
+                  
                   <Button className="btn secondary__btn auth__btn" type="submit">
                     {t.create}
                   </Button>
