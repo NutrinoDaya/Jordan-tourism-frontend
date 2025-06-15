@@ -674,52 +674,47 @@ const Admin = () => {
       )}
 
 
-        {/* --- Contacts Tab --- */}
-        {activeTab === "contacts" && (
-          <Row>
-            <Col lg="12">
-              <h4 className="mb-4">Manage Contacts</h4>
-              {contactsLoading ? (
-                <Spinner />
-              ) : contacts.length > 0 ? (
-                contacts.map((contact) => (
-                  <Card key={contact._id} className="mb-3 p-3">
-                    <Row>
-                      <Col md="12">
-                        <p>
-                          <strong>Name:</strong> {contact.name}
-                        </p>
-                        <p>
-                          <strong>Email:</strong> {contact.email}
-                        </p>
-                        <p>
-                          <strong>Phone:</strong> {contact.phone}
-                        </p>
-                        <p>
-                          <strong>Message:</strong> {contact.message}
-                        </p>
-                        <p>
-                          <small>
-                            Submitted on:{" "}
-                            {new Date(contact.createdAt).toLocaleString()}
-                          </small>
-                        </p>
-                        <Button
-                          color="danger"
-                          onClick={() => handleDelete("contact", contact._id)}
-                        >
-                          Delete
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Card>
-                ))
-              ) : (
-                <p>No contacts found.</p>
-              )}
-            </Col>
-          </Row>
-        )}
+      {/* --- Contacts Tab --- */}
+      {activeTab === "contacts" && (
+        <Row>
+          <Col lg="12">
+            <h4 className="mb-4">Manage Contacts</h4>
+            {contactsLoading ? (
+              <Spinner />
+            ) : contacts.length > 0 ? (
+              contacts.map((contact) => (
+                <Card key={contact._id} className="mb-3 p-3">
+                  <Row>
+                    <Col md="12">
+                      <p>
+                        <strong>Username:</strong> {contact.username}
+                      </p>
+                      <p>
+                        <strong>Email:</strong> {contact.email}
+                      </p>
+                      <p>
+                        <strong>Phone:</strong> {contact.phone}
+                      </p>
+                      {/* The `handleDelete` function will now delete the USER, not a contact message.
+                        Ensure this is the desired behavior. If you need to delete something else,
+                        you may need to adjust the backend logic for the delete operation.
+                      */}
+                      <Button
+                        color="danger"
+                        onClick={() => handleDelete("user", contact._id)} // Note: Changed to "user"
+                      >
+                        Delete User
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card>
+              ))
+            ) : (
+              <p>No contacts found.</p>
+            )}
+          </Col>
+        </Row>
+      )}
 
         {["users", "tours", "blogs", "bookings", "contacts"].indexOf(activeTab) === -1 && (
           <div className="text-center">
