@@ -53,6 +53,8 @@ const TourDetails = () => {
   }
 
   if (errorTour || errorReviews) {
+    console.log("errorReviews : ", errorReviews)
+    console.log("errorTour : ", errorTour)
     return <div className="error__msg">Error loading tour details. Check your network and try again.</div>;
   }
 
