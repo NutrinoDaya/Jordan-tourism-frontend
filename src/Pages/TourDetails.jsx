@@ -21,28 +21,28 @@ const TourDetails = () => {
   const [isReviewError, setIsReviewError] = useState(false);
   const [isLoginAlertVisible, setIsLoginAlertVisible] = useState(false);
 
-  // Fetch tour data using tourId (if available)
+  // Fetch tour data
   const {
     data: tour,
     loading: loadingTour,
     error: errorTour,
   } = useFetch(`tours/${id}`);
 
-  // Fetch reviews for the tour using tourId (if available)
+  // Fetch reviews for the tour
   const {
     data: fetchedReviews,
     loading: loadingReviews,
     error: errorReviews,
   } = useFetch(`review/${id}/`);
 
-  // Fetch updated reviews from server
+  // Set reviews from fetch
   useEffect(() => {
     if (fetchedReviews) {
       setReviews(fetchedReviews);
     }
   }, [fetchedReviews]);
 
-  // Perform error handling in case the tour or reviews are still loading
+  // Loading state
   if (loadingTour || loadingReviews) {
     return (
       <div className="loader-container">
@@ -52,60 +52,59 @@ const TourDetails = () => {
     );
   }
 
-  // Perform error handling in case there's an error fetching the tour or reviews
+  // Error state
   if (errorTour || !tour || errorReviews) {
-    console.log("errorTour : ", errorTour)
-    console.log("tour : ", tour)
-    console.log("errorReviews : ", errorReviews)
-
     return <div className="error__msg">Error loading tour details. Check your network</div>;
   }
 
   const { photo, title, desc, price, city, distance, address, maxGroupSize } =
     tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
-
   const options = { day: "numeric", month: "long", year: "numeric" };
-const submitHandler = async (e) => {
-  e.preventDefault();
 
-  if (!user) {
-    setIsLoginAlertVisible(true);
-    return;
-  }
-
-  const reviewMsg = reviewMsgRef.current.value;
-  const username = user.username;
-
-  const reviewData = {
-    rating: tourRating,
-    reviewText: reviewMsg,
-    username: username,
+  // 🌟 FIX: Added the missing handleRatingClick function
+  const handleRatingClick = (value) => {
+    setTourRating(value);
   };
 
-  try {
-    // The 'response.data' will now contain the full review object from the back-end
-    const response = await axios.post(`${BASE_URL}/review/${id}`, reviewData);
+  // Handle review submission
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-    // 🌟 FIX: Correctly update the reviews state
-    setReviews([...reviews, response.data]);
+    if (!user) {
+      setIsLoginAlertVisible(true);
+      return;
+    }
 
-    // Reset review form fields
-    setTourRating(null);
-    reviewMsgRef.current.value = "";
-    setIsReviewSuccess(true);
+    const reviewMsg = reviewMsgRef.current.value;
 
-    // 🌟 FIX: Remove the forced page reload
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 1000);
+    if (!reviewMsg || !tourRating) {
+      alert("Please provide a rating and a review.");
+      return;
+    }
 
-  } catch (error) {
-    console.log("Error : ", error)
-    setIsReviewError(true);
-  }
-}
+    const reviewData = {
+      username: user.username,
+      reviewText: reviewMsg,
+      rating: tourRating,
+    };
 
+    try {
+      const response = await axios.post(`${BASE_URL}/review/${id}`, reviewData);
+
+      // Update reviews state with the new review from the server response
+      setReviews([...reviews, response.data]);
+
+      // Reset form
+      setTourRating(null);
+      reviewMsgRef.current.value = "";
+      setIsReviewSuccess(true);
+
+    } catch (error) {
+      console.error("Failed to submit review:", error);
+      setIsReviewError(true);
+    }
+  };
 
   return (
     <>
@@ -122,81 +121,54 @@ const submitHandler = async (e) => {
                   <div className="d-flex align-items-center gap-5">
                     <span className="tour__rating d-flex align-items-center gap-1">
                       <i className="ri-star-fill"></i>
-                      {avgRating === 0 ? null : avgRating}
-                      {totalRating === 0 ? (
-                        <span>Not Rated</span>
-                      ) : (
-                        <span>({reviews.length || 0})</span>
-                      )}
+                      {avgRating === 0 ? "Not Rated" : avgRating}
+                      {totalRating > 0 && <span>({reviews.length})</span>}
                     </span>
 
                     <span>
-                      <i className="ri-map-pin-user-fill"></i>
-                      {address}
+                      <i className="ri-map-pin-user-fill"></i> {address}
                     </span>
                   </div>
+
                   <div className="tour__extra-details">
-                    <span>
-                      <i className="ri-map-pin-2-line"></i>
-                      {city}
-                    </span>
-                    <span>
-                      <i className="ri-money-dollar-circle-line"></i> {price}
-                      /Per Person
-                    </span>
-                    <span>
-                      <i className="ri-map-pin-line"></i>
-                      {distance} Km
-                    </span>
-                    <span>
-                      <i className="ri-group-line"></i>
-                      {maxGroupSize} People
-                    </span>
+                    <span><i className="ri-map-pin-2-line"></i> {city}</span>
+                    <span><i className="ri-money-dollar-circle-line"></i> ${price} /per person</span>
+                    <span><i className="ri-map-pin-line"></i> {distance} k/m</span>
+                    <span><i className="ri-group-line"></i> {maxGroupSize} people</span>
                   </div>
+
                   <h5>Description</h5>
                   <p>{desc}</p>
                 </div>
 
                 <div className="tour__reviews mt-4">
                   <h4>Reviews ({reviews?.length || 0} reviews)</h4>
+
                   {isReviewSuccess && (
-                    <Alert
-                      color="success"
-                      toggle={() => setIsReviewSuccess(false)}
-                    >
-                      Review Successful
+                    <Alert color="success" toggle={() => setIsReviewSuccess(false)}>
+                      Review Submitted Successfully!
                     </Alert>
                   )}
-
                   {isReviewError && (
-                    <Alert
-                      color="danger"
-                      className=""
-                      toggle={() => setIsReviewError(false)}
-                    >
+                    <Alert color="danger" toggle={() => setIsReviewError(false)}>
                       Failed to submit review. Please try again.
                     </Alert>
                   )}
-
                   {isLoginAlertVisible && (
-                    <Alert
-                      color="warning"
-                      toggle={() => setIsLoginAlertVisible(false)}
-                    >
+                    <Alert color="warning" toggle={() => setIsLoginAlertVisible(false)}>
                       Please login to submit a review.
                     </Alert>
                   )}
+
                   <Form onSubmit={submitHandler}>
                     <div className="d-flex align-items-center gap-3 mb-4 rating__group">
                       {[1, 2, 3, 4, 5].map((value) => (
                         <span
                           key={value}
                           onClick={() => handleRatingClick(value)}
-                          className={
-                            tourRating && value <= tourRating ? "active" : ""
-                          }
+                          className={tourRating >= value ? "active" : ""}
                         >
-                          {value} <i className="ri-star-fill"></i>
+                          {value} <i className="ri-star-s-fill"></i>
                         </span>
                       ))}
                     </div>
@@ -205,7 +177,7 @@ const submitHandler = async (e) => {
                       <input
                         type="text"
                         ref={reviewMsgRef}
-                        placeholder="Share your Thoughts"
+                        placeholder="Share your thoughts"
                         required
                       />
                       <button className="primary__btn text-white" type="submit">
@@ -213,25 +185,19 @@ const submitHandler = async (e) => {
                       </button>
                     </div>
                   </Form>
-                  <ListGroup className="user__reviews">
-                    {reviews?.map((review, index) => (
-                      <div className="review__item" key={index}>
-                        <img src={avtar} alt="" />
 
+                  <ListGroup className="user__reviews">
+                    {reviews?.map((review) => (
+                      <div className="review__item" key={review._id}>
+                        <img src={avtar} alt="" />
                         <div className="w-100">
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
                               <h5>{review.username}</h5>
-                              <p>
-                                {new Date(review.createdAt).toLocaleDateString(
-                                  "en-in",
-                                  options
-                                )}
-                              </p>
+                              <p>{new Date(review.createdAt).toLocaleDateString("en-US", options)}</p>
                             </div>
                             <span className="d-flex align-items-center">
-                              {review.rating}
-                              <i className="ri-star-s-fill"></i>
+                              {review.rating} <i className="ri-star-s-fill"></i>
                             </span>
                           </div>
                           <h6>{review.reviewText}</h6>
