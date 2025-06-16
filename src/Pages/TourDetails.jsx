@@ -66,48 +66,45 @@ const TourDetails = () => {
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   const options = { day: "numeric", month: "long", year: "numeric" };
+const submitHandler = async (e) => {
+  e.preventDefault();
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  if (!user) {
+    setIsLoginAlertVisible(true);
+    return;
+  }
 
-    if (!user) {
-      setIsLoginAlertVisible(true);
-      return;
-    }
+  const reviewMsg = reviewMsgRef.current.value;
+  const username = user.username;
 
-    const reviewMsg = reviewMsgRef.current.value;
-    const username = user.username;
-
-    const reviewData = {
-      rating: tourRating,
-      reviewText: reviewMsg,
-      username: username,
-    };
-
-    try {
-      const response = await axios.post(`${BASE_URL}/review/${id}`, reviewData);
-
-
-      // Update the reviews state with the new review
-      setReviews([...reviews, response.data]);
-      
-
-      // Reset review form fields
-      setTourRating(null);
-      reviewMsgRef.current.value = "";
-
-      setIsReviewSuccess(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      setIsReviewError(true);
-    }
+  const reviewData = {
+    rating: tourRating,
+    reviewText: reviewMsg,
+    username: username,
   };
 
-  const handleRatingClick = (value) => {
-    setTourRating((prevRating) => (prevRating === value ? null : value));
-  };
+  try {
+    // The 'response.data' will now contain the full review object from the back-end
+    const response = await axios.post(`${BASE_URL}/review/${id}`, reviewData);
+
+    // 🌟 FIX: Correctly update the reviews state
+    setReviews([...reviews, response.data]);
+
+    // Reset review form fields
+    setTourRating(null);
+    reviewMsgRef.current.value = "";
+    setIsReviewSuccess(true);
+
+    // 🌟 FIX: Remove the forced page reload
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000);
+
+  } catch (error) {
+    setIsReviewError(true);
+  }
+}
+
 
   return (
     <>

@@ -82,6 +82,8 @@ const BlogDetails = () => {
     }
   };
 
+
+  
   const handleDeleteComment = async (commentId) => {
     try {
       await axios.get(`${BASE_URL}/comment/${commentId}`);
