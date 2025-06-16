@@ -89,7 +89,9 @@ const TourDetails = () => {
 
 
       // Update the reviews state with the new review
+      console.log("response data : ", response.data)
       setReviews([...reviews, response.data]);
+      
 
       // Reset review form fields
       setTourRating(null);
