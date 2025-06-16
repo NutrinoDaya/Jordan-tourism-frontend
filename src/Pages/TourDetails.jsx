@@ -101,6 +101,7 @@ const submitHandler = async (e) => {
     // }, 1000);
 
   } catch (error) {
+    console.log("Error : ", error)
     setIsReviewError(true);
   }
 }
