@@ -15,34 +15,34 @@ const TourDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef("");
   const [tourRating, setTourRating] = useState(null);
-  const { user } = useContext(AuthContext);
-
-  // Fetch tour data
-  const { data: tour, loading: loadingTour, error: errorTour } = useFetch(
-    `${BASE_URL}/tours/${id}`
-  );
-
-  // Fetch reviews for the tour
-  const { data: fetchedReviews, loading: loadingReviews, error: errorReviews, refetch } = useFetch(
-    `${BASE_URL}/review/${id}`
-  );
-  
-  // Local state for reviews to allow optimistic updates
   const [reviews, setReviews] = useState([]);
+  const { user } = useContext(AuthContext);
+  const [isReviewSuccess, setIsReviewSuccess] = useState(false);
+  const [isReviewError, setIsReviewError] = useState(false);
+  const [isLoginAlertVisible, setIsLoginAlertVisible] = useState(false);
 
+  // Fetch tour data using tourId (if available)
+  const {
+    data: tour,
+    loading: loadingTour,
+    error: errorTour,
+  } = useFetch(`tours/${id}`);
+
+  // Fetch reviews for the tour using tourId (if available)
+  const {
+    data: fetchedReviews,
+    loading: loadingReviews,
+    error: errorReviews,
+  } = useFetch(`review/${id}/`);
+
+  // Fetch updated reviews from server
   useEffect(() => {
-    // Note the change here: we access fetchedReviews.data
-    if (fetchedReviews?.data) {
-      setReviews(fetchedReviews.data);
+    if (fetchedReviews) {
+      setReviews(fetchedReviews);
     }
   }, [fetchedReviews]);
 
-  const [submitStatus, setSubmitStatus] = useState({
-    success: false,
-    error: false,
-    loginAlert: false,
-  });
-
+  // Perform error handling in case the tour or reviews are still loading
   if (loadingTour || loadingReviews) {
     return (
       <div className="loader-container">
@@ -52,67 +52,61 @@ const TourDetails = () => {
     );
   }
 
-  if (errorTour || errorReviews) {
-    console.log("errorReviews : ", errorReviews)
+  // Perform error handling in case there's an error fetching the tour or reviews
+  if (errorTour || !tour || errorReviews) {
     console.log("errorTour : ", errorTour)
-    return <div className="error__msg">Error loading tour details. Check your network and try again.</div>;
+    console.log("tour : ", tour)
+    console.log("errorReviews : ", errorReviews)
+
+    return <div className="error__msg">Error loading tour details. Check your network</div>;
   }
 
-  // Ensure tour is not null before destructuring
-  if (!tour) {
-    return <div className="error__msg">Tour not found.</div>;
-  }
-
-  const { photo, title, desc, price, city, distance, address, maxGroupSize } = tour;
+  const { photo, title, desc, price, city, distance, address, maxGroupSize } =
+    tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   const options = { day: "numeric", month: "long", year: "numeric" };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setSubmitStatus({ success: false, error: false, loginAlert: false }); // Reset status
 
     if (!user) {
-      setSubmitStatus({ ...submitStatus, loginAlert: true });
+      setIsLoginAlertVisible(true);
       return;
     }
 
     const reviewMsg = reviewMsgRef.current.value;
-
-    if (!tourRating || !reviewMsg) {
-        alert("Please provide a rating and a review text.");
-        return;
-    }
+    const username = user.username;
 
     const reviewData = {
       rating: tourRating,
       reviewText: reviewMsg,
-      username: user.username, // It's better to get ID from the verified user on the backend
+      username: username,
     };
 
     try {
-      // The backend returns the new review object in the `data` property
       const response = await axios.post(`${BASE_URL}/review/${id}`, reviewData);
 
-      // Add the new review to the state instantly
-      if (response.data.data) {
-        setReviews([...reviews, response.data.data]);
-      }
 
-      // Reset form
+      // Update the reviews state with the new review
+      setReviews([...reviews, response.data]);
+      
+
+      // Reset review form fields
       setTourRating(null);
       reviewMsgRef.current.value = "";
 
-      setSubmitStatus({ ...submitStatus, success: true });
-
+      setIsReviewSuccess(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
-      setSubmitStatus({ ...submitStatus, error: true });
-      console.error("Failed to submit review:", error);
+      setIsReviewError(true);
     }
   };
 
   const handleRatingClick = (value) => {
-    setTourRating(value);
+    setTourRating((prevRating) => (prevRating === value ? null : value));
   };
 
   return (
@@ -129,64 +123,117 @@ const TourDetails = () => {
 
                   <div className="d-flex align-items-center gap-5">
                     <span className="tour__rating d-flex align-items-center gap-1">
-                      <i className="ri-star-fill" style={{color: 'var(--secondary-color)'}}></i>
-                      {avgRating === 0 ? "Not Rated" : avgRating}
-                      {totalRating > 0 && <span>({reviews.length})</span>}
+                      <i className="ri-star-fill"></i>
+                      {avgRating === 0 ? null : avgRating}
+                      {totalRating === 0 ? (
+                        <span>Not Rated</span>
+                      ) : (
+                        <span>({reviews.length || 0})</span>
+                      )}
                     </span>
-                    <span><i className="ri-map-pin-user-fill"></i>{address}</span>
-                  </div>
 
+                    <span>
+                      <i className="ri-map-pin-user-fill"></i>
+                      {address}
+                    </span>
+                  </div>
                   <div className="tour__extra-details">
-                    <span><i className="ri-map-pin-2-line"></i>{city}</span>
-                    <span><i className="ri-money-dollar-circle-line"></i>${price}/Per Person</span>
-                    <span><i className="ri-map-pin-line"></i>{distance} k/m</span>
-                    <span><i className="ri-group-line"></i>{maxGroupSize} People</span>
+                    <span>
+                      <i className="ri-map-pin-2-line"></i>
+                      {city}
+                    </span>
+                    <span>
+                      <i className="ri-money-dollar-circle-line"></i> {price}
+                      /Per Person
+                    </span>
+                    <span>
+                      <i className="ri-map-pin-line"></i>
+                      {distance} Km
+                    </span>
+                    <span>
+                      <i className="ri-group-line"></i>
+                      {maxGroupSize} People
+                    </span>
                   </div>
-
                   <h5>Description</h5>
                   <p>{desc}</p>
                 </div>
 
                 <div className="tour__reviews mt-4">
                   <h4>Reviews ({reviews?.length || 0} reviews)</h4>
-                  
-                  {submitStatus.success && (
-                    <Alert color="success" toggle={() => setSubmitStatus({ ...submitStatus, success: false })}>Review Submitted Successfully!</Alert>
-                  )}
-                  {submitStatus.error && (
-                    <Alert color="danger" toggle={() => setSubmitStatus({ ...submitStatus, error: false })}>Failed to submit review. Please try again.</Alert>
-                  )}
-                  {submitStatus.loginAlert && (
-                    <Alert color="warning" toggle={() => setSubmitStatus({ ...submitStatus, loginAlert: false })}>Please login to submit a review.</Alert>
+                  {isReviewSuccess && (
+                    <Alert
+                      color="success"
+                      toggle={() => setIsReviewSuccess(false)}
+                    >
+                      Review Successful
+                    </Alert>
                   )}
 
+                  {isReviewError && (
+                    <Alert
+                      color="danger"
+                      className=""
+                      toggle={() => setIsReviewError(false)}
+                    >
+                      Failed to submit review. Please try again.
+                    </Alert>
+                  )}
+
+                  {isLoginAlertVisible && (
+                    <Alert
+                      color="warning"
+                      toggle={() => setIsLoginAlertVisible(false)}
+                    >
+                      Please login to submit a review.
+                    </Alert>
+                  )}
                   <Form onSubmit={submitHandler}>
                     <div className="d-flex align-items-center gap-3 mb-4 rating__group">
                       {[1, 2, 3, 4, 5].map((value) => (
-                        <span key={value} onClick={() => handleRatingClick(value)}>
-                          {value} <i className={tourRating >= value ? "ri-star-s-fill" : "ri-star-line"}></i>
+                        <span
+                          key={value}
+                          onClick={() => handleRatingClick(value)}
+                          className={
+                            tourRating && value <= tourRating ? "active" : ""
+                          }
+                        >
+                          {value} <i className="ri-star-fill"></i>
                         </span>
                       ))}
                     </div>
 
                     <div className="review__input">
-                      <input type="text" ref={reviewMsgRef} placeholder="Share your Thoughts" required />
-                      <button className="btn primary__btn text-white" type="submit">Submit</button>
+                      <input
+                        type="text"
+                        ref={reviewMsgRef}
+                        placeholder="Share your Thoughts"
+                        required
+                      />
+                      <button className="primary__btn text-white" type="submit">
+                        Submit
+                      </button>
                     </div>
                   </Form>
-                  
                   <ListGroup className="user__reviews">
                     {reviews?.map((review, index) => (
                       <div className="review__item" key={index}>
                         <img src={avtar} alt="" />
+
                         <div className="w-100">
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
                               <h5>{review.username}</h5>
-                              <p>{new Date(review.createdAt).toLocaleDateString("en-US", options)}</p>
+                              <p>
+                                {new Date(review.createdAt).toLocaleDateString(
+                                  "en-in",
+                                  options
+                                )}
+                              </p>
                             </div>
                             <span className="d-flex align-items-center">
-                              {review.rating} <i className="ri-star-s-fill"></i>
+                              {review.rating}
+                              <i className="ri-star-s-fill"></i>
                             </span>
                           </div>
                           <h6>{review.reviewText}</h6>
