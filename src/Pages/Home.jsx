@@ -96,6 +96,7 @@ function Chatbot({ t }) {
         body: JSON.stringify({ prompt: userMsg }),
       });
       const data = await res.json();
+      console.log("Data : ", data)
       setMsgs(m => [...m, { from: 'bot', text: data.response || t.errorMsg }]);
     } catch {
       setMsgs(m => [...m, { from: 'bot', text: t.offlineMsg }]);
